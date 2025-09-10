@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const authRoutes = require('./api/auth');
 const dishRoutes = require('./api/dish')
+const tableRoutes = require('./api/table')
 
 connectDB();
 const app = express();
@@ -14,7 +15,7 @@ app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/dish', dishRoutes);
-
+app.use('/api/tables', tableRoutes);
 
 
 const PORT = process.env.PORT || 5000;
