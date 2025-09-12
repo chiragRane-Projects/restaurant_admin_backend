@@ -39,6 +39,23 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isAvailable } = req.body;
+    const table = await Table.findById(id);
+    if (!table) {
+      return res.status(404).json({ message: "Table not found" });
+    }
+    table.isAvailable = isAvailable;
+    await table.save();
+    return res.status(200).json({ message: "Table availability updated", table });
+  } catch (error) {
+    console.error("Error updating table availability:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
