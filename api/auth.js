@@ -11,7 +11,7 @@ router.post("/register", auth, ownerOnly, async (req, res) => {
 
         const userExists = await User.findOne({ username });
 
-        if (userExists) {const {auth, ownerOnly} = require('../middleware/auth');
+        if (userExists){
             return res.status(400).json({ message: 'User exists' });
         }
 
