@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router();
 const Order = require("../models/Orders");
 const Dishes = require("../models/Dishes");
+const {auth, ownerOnly} = require('../middleware/auth');
 
-router.get("/", async (req, res) => {
+router.get("/", auth, ownerOnly, async (req, res) => {
   try {
     const orders = await Order.find()
       .populate("customer")

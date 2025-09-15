@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Dish = require('../models/Dishes');
+const {auth, ownerOnly} = require('../middleware/auth');
 
 router.get("/", async(req, res) => {
     try {
@@ -16,7 +17,7 @@ router.get("/", async(req, res) => {
     }
 });
 
-router.post("/", async(req, res) => {
+router.post("/", auth, ownerOnly, async(req, res) => {
     try {
         const {name, description, quantity, category, dietory, price, image} = req.body;
 
@@ -36,7 +37,7 @@ router.post("/", async(req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, ownerOnly, async (req, res) => {
   try {
     const { id } = req.params;   
     const updates = req.body;    
@@ -57,7 +58,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', auth, ownerOnly, async(req, res) => {
     try {
         const {id} = req.params;
 

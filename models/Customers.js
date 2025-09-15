@@ -5,7 +5,6 @@ const customerSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     address: {type: String, required: true},
     authProvider: { type: String, enum: ['email', 'google'], default: 'email' },
-    password: {type: String, required: true},
     googleId: { type: String },
     visits: {type: Number, default: 0},
     loyaltyPoints: {type: Number, default: 0}, 

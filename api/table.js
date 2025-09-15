@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Table = require('../models/Tables');
+const { auth,ownerOnly } = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
     try {
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, ownerOnly, async (req, res) => {
     try {
         const { tableNo, seatingCap, isAvailable, reservation } = req.body;
 
@@ -39,7 +40,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, ownerOnly, async (req, res) => {
   try {
     const { id } = req.params;
     const { isAvailable } = req.body;
@@ -56,7 +57,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, ownerOnly, async (req, res) => {
     try {
         const { id } = req.params;
 
