@@ -6,7 +6,7 @@ function auth(req, res, next) {
 
   const token = header.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY); // 👈 FIXED
     req.user = decoded; 
     return next();
   } catch (err) {
@@ -15,7 +15,9 @@ function auth(req, res, next) {
 }
 
 function ownerOnly(req, res, next) {
-  if (!req.user || req.user.role !== 'owner') return res.status(403).json({ message: 'Forbidden' });
+  if (!req.user || req.user.role !== 'owner') {
+    return res.status(403).json({ message: 'Forbidden' });
+  }
   next();
 }
 

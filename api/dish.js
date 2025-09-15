@@ -54,6 +54,7 @@ router.put('/:id', auth, ownerOnly, async (req, res) => {
 
     return res.status(200).json({ message: "Dish updated successfully", updatedDish });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 });

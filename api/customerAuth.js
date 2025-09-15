@@ -19,14 +19,14 @@ router.get('/', auth, ownerOnly, async (req, res) => {
 });
 
 router.post('/email-signup', async (req, res) => {
-    const { email, name } = req.body;
+    const { name, email, address } = req.body;
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiresAt = Date.now() + 10 * 60 * 1000;
 
     if (!global.otpStore) global.otpStore = {};
 
-    global.otpStore[email] = { otp, name, expiresAt: otpExpiresAt };
+    global.otpStore[email] = { otp, name,address,  expiresAt: otpExpiresAt };
 
     try {
         const transporter = nodemailer.createTransport({
@@ -71,7 +71,7 @@ router.post('/verify-otp', async (req, res) => {
         customer = await Customer.create({
             name: record.name,
             email,
-            authProvider: 'email'
+            address: record.address,
         });
     }
 
