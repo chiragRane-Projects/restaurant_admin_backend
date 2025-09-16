@@ -19,12 +19,12 @@ router.get("/", async(req, res) => {
 
 router.post("/", auth, ownerOnly, async(req, res) => {
     try {
-        const {name, description, quantity, category, dietory, price, image} = req.body;
+        const {name, description, portion, category, dietory, price, image} = req.body;
 
         const newDish = await Dish.create({
             name,
             description,
-            quantity,
+            portion,
             category,
             dietory,
             price,

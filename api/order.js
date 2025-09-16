@@ -35,7 +35,7 @@ router.post('/', auth, async (req, res) => {
   try {
     const { items, paymentMode } = req.body;
 
-    if (items.length === 0) {
+    if (!items) {
       return res.status(400).json({ message: "No items in order" });
     }
 
@@ -53,7 +53,7 @@ router.post('/', auth, async (req, res) => {
         dish: dish._id,
         name: dish.name,
         price: dish.price,
-        quantity: dish.quantity
+        quantity: item.quantity
       };
 
       populatedItems.push(orderItem);
@@ -69,6 +69,7 @@ router.post('/', auth, async (req, res) => {
 
     return res.status(201).json({message: "Order Placed", order: newOrder._id});
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Server error" });
   }
 })

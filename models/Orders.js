@@ -4,7 +4,7 @@ const ordersSchema = new mongoose.Schema({
     customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customer" },
     items: [
       {
-        dish: { type: mongoose.Schema.Types.ObjectId, ref: "Dishes", required: true },
+        dish: { type: mongoose.Schema.Types.ObjectId, ref: "Dish", required: true },
         name: { type: String, required: true }, 
         price: { type: Number, required: true },
         quantity: { type: Number, required: true, min: 1 },
