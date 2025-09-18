@@ -111,30 +111,4 @@ router.get("/stats/dietary-breakdown", auth, ownerOnly, async (req, res) => {
   }
 });
 
-// ---------- REPORTS (paginated + filter) ----------
-router.get("/reports/orders", auth, ownerOnly, async (req, res) => {
-  try {
-    let { start, end, page = 1, limit = 20 } = req.query;
-    page = parseInt(page) || 1;
-    limit = parseInt(limit) || 20;
-
-    const query = {};
-    if (start && end) {
-      query.createdAt = { $gte: new Date(start), $lte: new Date(end) };
-    }
-
-    const total = await Order.countDocuments(query);
-    const orders = await Order.find(query)
-      .populate("customer", "name email")
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
-
-    res.json({ total, page, limit, data: orders });
-  } catch (err) {
-    console.error("Reports API error:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
 module.exports = router;
