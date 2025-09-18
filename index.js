@@ -14,7 +14,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
+app.use(cors({ origin: process.env.CLIENT_URL || '*' || "http://localhost:8081" || "http://192.168.0.109:8081"}));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/dish', dishRoutes);
